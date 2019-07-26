@@ -11,6 +11,7 @@ import com.google.android.material.navigation.NavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import android.view.Menu
+import android.view.View
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 
@@ -40,4 +41,15 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    fun loginBtnNavClicked(view: View) {
+
+    }
+
+    fun addChannelClicked(view: View) {
+
+    }
+
+    fun sendMsgBtnClicked(view: View) {
+
+    }
 }
