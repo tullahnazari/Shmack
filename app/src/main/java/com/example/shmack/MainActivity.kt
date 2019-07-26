@@ -1,5 +1,6 @@
 package com.example.shmack
 
+import android.content.Intent
 import android.os.Bundle
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
@@ -40,9 +41,11 @@ class MainActivity : AppCompatActivity() {
             super.onBackPressed()
         }
     }
-
+    //creating intent to go to loginpage after clicking login button on main page
     fun loginBtnNavClicked(view: View) {
 
+        val loginIntent = Intent(this, LoginActivity::class.java)
+        startActivity(loginIntent)
     }
 
     fun addChannelClicked(view: View) {
