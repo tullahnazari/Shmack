@@ -1,18 +1,13 @@
-package com.example.shmack
+package com.example.shmack.Controller
 
 import android.content.Intent
 import android.os.Bundle
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.snackbar.Snackbar
 import androidx.core.view.GravityCompat
 import androidx.appcompat.app.ActionBarDrawerToggle
-import android.view.MenuItem
 import androidx.drawerlayout.widget.DrawerLayout
-import com.google.android.material.navigation.NavigationView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
-import android.view.Menu
 import android.view.View
+import com.example.shmack.R
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 
@@ -26,7 +21,9 @@ class MainActivity : AppCompatActivity() {
 
 
         val toggle = ActionBarDrawerToggle(
-            this, drawer_layout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close
+            this, drawer_layout, toolbar,
+            R.string.navigation_drawer_open,
+            R.string.navigation_drawer_close
         )
         drawer_layout.addDrawerListener(toggle)
         toggle.syncState()
