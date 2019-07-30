@@ -39,7 +39,7 @@ class CreateUserActivity : AppCompatActivity() {
 
     fun createUserClicked(view: View) {
 
-        AuthService.registerUser(this, "appemail@gmail.com", "123456") {
+        AuthService.registerUser(this, "appemail12@gmail.com", "123456") {
             complete -> if (complete) {
 
             }
