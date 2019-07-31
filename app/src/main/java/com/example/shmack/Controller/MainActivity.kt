@@ -75,7 +75,7 @@ class MainActivity : AppCompatActivity() {
 
             Toast.makeText(this, "You have been logged out", Toast.LENGTH_SHORT).show()
             UserDataService.logout()
-            userNameNavHeader.text = "Login"
+            userNameNavHeader.text = ""
             userEmailNavHeader.text = ""
             userImageNavHeader.setImageResource(R.drawable.profiledefault)
             userImageNavHeader.setBackgroundColor(Color.TRANSPARENT)
