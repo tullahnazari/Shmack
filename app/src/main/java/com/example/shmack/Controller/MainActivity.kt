@@ -11,7 +11,9 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import android.view.View
+import android.widget.EditText
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.example.shmack.R
 import com.example.shmack.Services.AuthService
@@ -89,6 +91,28 @@ class MainActivity : AppCompatActivity() {
 
     fun addChannelClicked(view: View) {
 
+        //creating a view for modal/dialog on add channel click
+        if (AuthService.isLoggedIn) {
+            val builder = AlertDialog.Builder(this)
+            val dialogview = layoutInflater.inflate(R.layout.add_channel_dialog, null)
+
+            builder.setView(dialogview).setPositiveButton("Add") {
+                dialogInterface, i ->
+                //perform logic when clicked
+                val nameTextField = dialogview.findViewById<EditText>(R.id.addChannelNameTxt)
+                val descTextField = dialogview.findViewById<EditText>(R.id.addChannelDesc)
+                val channelName = nameTextField.text.toString()
+                val channelDesc = descTextField.text.toString()
+
+                //Create channel with the channel name and desc
+
+            }
+                    //cancel and close the dialog
+                .setNegativeButton("Cancel") {
+                    dialogInterface, i ->
+                }
+                .show()
+        }
     }
 
     fun sendMsgBtnClicked(view: View) {
