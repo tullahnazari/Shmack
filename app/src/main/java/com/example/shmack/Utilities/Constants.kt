@@ -2,6 +2,7 @@ package com.example.shmack.Utilities
 
 //API URLS
 const val BASE_URL = "https://schmackchat.herokuapp.com/v1/"
+const val SOCKET_URL = "https://schmackchat.herokuapp.com/"
 const val URL_REGISTER = "${BASE_URL}account/register"
 const val URL_LOGIN = "${BASE_URL}account/login"
 const val URL_CREATE_USER = "${BASE_URL}user/add"
