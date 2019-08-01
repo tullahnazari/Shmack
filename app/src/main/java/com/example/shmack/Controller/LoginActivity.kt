@@ -24,7 +24,7 @@ class LoginActivity : AppCompatActivity() {
         enableSpinner(true)
         val email = loginEmailText.text.toString()
         val password = loginPasswordText.text.toString()
-        
+
         if (email.isNotEmpty() && password.isNotEmpty()) {
 
             AuthService.loginUser(this, email, password) {
