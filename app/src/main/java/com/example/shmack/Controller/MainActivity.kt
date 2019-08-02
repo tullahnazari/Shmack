@@ -58,6 +58,11 @@ class MainActivity : AppCompatActivity() {
         setupAdapters()
 
 
+        if(App.prefs.isLoggedIn) {
+            AuthService.findUserByEmail(this) {}
+        }
+
+
 
     }
     //socket lifecycle
@@ -80,7 +85,7 @@ class MainActivity : AppCompatActivity() {
 
     private val userDataChangeReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent?) {
-            if (AuthService.isLoggedIn) {
+            if (App.prefs.isLoggedIn) {
                 userNameNavHeader.text = UserDataService.name
                 userEmailNavHeader.text = UserDataService.email
                 val resourceId = resources.getIdentifier(UserDataService.avatarName, "drawable",
@@ -111,7 +116,7 @@ class MainActivity : AppCompatActivity() {
     //creating intent to go to loginpage after clicking login button on main page
     fun loginBtnNavClicked(view: View) {
 
-        if (AuthService.isLoggedIn) {
+        if (App.prefs.isLoggedIn) {
             //log out
 
             Toast.makeText(this, "You have been logged out", Toast.LENGTH_SHORT).show()
@@ -131,7 +136,7 @@ class MainActivity : AppCompatActivity() {
     fun addChannelClicked(view: View) {
 
         //creating a view for modal/dialog on add channel click
-        if (AuthService.isLoggedIn) {
+        if (App.prefs.isLoggedIn) {
             val builder = AlertDialog.Builder(this)
             val dialogview = layoutInflater.inflate(R.layout.add_channel_dialog, null)
 
