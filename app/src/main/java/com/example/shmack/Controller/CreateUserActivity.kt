@@ -53,11 +53,11 @@ class CreateUserActivity : AppCompatActivity() {
         //validating input fields for username, email and pw are not empty
         if (userName.isNotEmpty() && email.isNotEmpty() && password.isNotEmpty()) {
 
-            AuthService.registerUser(this, email, password) { registerSuccess ->
+            AuthService.registerUser(email, password) { registerSuccess ->
                 if (registerSuccess) {
-                    AuthService.loginUser(this, email, password) { loginSuccess ->
+                    AuthService.loginUser(email, password) { loginSuccess ->
                         if (loginSuccess) {
-                            AuthService.createUser(this, userName, email, userAvatar, avatorColor) { createdSuccess
+                            AuthService.createUser(userName, email, userAvatar, avatorColor) { createdSuccess
                                 ->
                                 if (createdSuccess) {
                                     Toast.makeText(this, "You are registered!", Toast.LENGTH_LONG).show()
