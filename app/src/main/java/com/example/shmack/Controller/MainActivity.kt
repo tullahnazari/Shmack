@@ -11,6 +11,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.Toast
@@ -67,6 +68,7 @@ class MainActivity : AppCompatActivity() {
         )
         drawer_layout.addDrawerListener(toggle)
         toggle.syncState()
+        hideKeyboard()
         setupAdapters()
         LocalBroadcastManager.getInstance(this).registerReceiver(userDataChangeReceiver,
             IntentFilter(BROADCAST_USER_DATA_CHANGE)
@@ -167,10 +169,12 @@ class MainActivity : AppCompatActivity() {
             loginButtonNavHeader.text = "Login"
             mainChannelName.text = "Please log in"
             Toast.makeText(this, "You have been logged out.", Toast.LENGTH_SHORT).show()
+            hideKeyboard()
 
         } else {
             val loginIntent = Intent(this, LoginActivity::class.java)
             startActivity(loginIntent)
+            hideKeyboard()
         }
     }
 
@@ -191,11 +195,13 @@ class MainActivity : AppCompatActivity() {
 
                 //Create channel with the channel name and desc
                 socket.emit("newChannel", channelName, channelDesc)
+                hideKeyboard()
 
             }
                     //cancel and close the dialog
                 .setNegativeButton("Cancel") {
                     dialogInterface, i ->
+                    hideKeyboard()
                 }
                 .show()
         }
@@ -246,7 +252,16 @@ class MainActivity : AppCompatActivity() {
             socket.emit("newMessage", messageTextField.text.toString(), userId, channelId,
                 UserDataService.name, UserDataService.avatarName, UserDataService.avatarColor)
             messageTextField.text.clear()
+            hideKeyboard()
         }
 
+    }
+
+    fun hideKeyboard() {
+        val inputManager = getSystemService(Context.INPUT_METHOD_SERVICE)
+                as InputMethodManager
+        if (inputManager.isAcceptingText) {
+            inputManager.hideSoftInputFromWindow(currentFocus?.windowToken, 0)
+        }
     }
 }
