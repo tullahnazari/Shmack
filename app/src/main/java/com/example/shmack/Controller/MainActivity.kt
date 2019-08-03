@@ -16,6 +16,8 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.shmack.Adapters.MessageAdapter
 import com.example.shmack.Model.Channel
 import com.example.shmack.Model.Message
 import com.example.shmack.R
@@ -35,11 +37,17 @@ class MainActivity : AppCompatActivity() {
 
     val socket = IO.socket(SOCKET_URL)
     lateinit var channelAdapter: ArrayAdapter<Channel>
+    lateinit var messageAdapter: MessageAdapter
     var selectedChannel : Channel? = null
 
     private fun setupAdapters() {
         channelAdapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, MessageService.channels)
         channel_list.adapter = channelAdapter
+
+        messageAdapter = MessageAdapter(this, MessageService.messages)
+        messageListView.adapter = messageAdapter
+        val layoutManager = LinearLayoutManager(this)
+        messageListView.layoutManager = layoutManager
     }
 
 
@@ -130,9 +138,11 @@ class MainActivity : AppCompatActivity() {
             MessageService.getMessages(selectedChannel!!.id) {
                 complete ->
                 if (complete) {
-                    for (message in MessageService.messages) {
-                        println(message.message)
+                    messageAdapter.notifyDataSetChanged()
+                    if (messageAdapter.itemCount > 0) {
+                        messageListView.smoothScrollToPosition(messageAdapter.itemCount -1)
                     }
+
                 }
             }
         }
@@ -151,14 +161,15 @@ class MainActivity : AppCompatActivity() {
 
         if (App.prefs.isLoggedIn) {
             //log out
-
-            Toast.makeText(this, "You have been logged out", Toast.LENGTH_SHORT).show()
             UserDataService.logout()
+            channelAdapter.notifyDataSetChanged()
+            messageAdapter.notifyDataSetChanged()
             userNameNavHeader.text = ""
             userEmailNavHeader.text = ""
             userImageNavHeader.setImageResource(R.drawable.profiledefault)
             userImageNavHeader.setBackgroundColor(Color.TRANSPARENT)
             loginButtonNavHeader.text = "Login"
+            Toast.makeText(this, "You have been logged out", Toast.LENGTH_SHORT).show()
 
         } else {
             val loginIntent = Intent(this, LoginActivity::class.java)
@@ -222,6 +233,8 @@ class MainActivity : AppCompatActivity() {
 
                     val newMessage = Message(msgBody, userName, channelId, userAvatar, userAvatarColor, id, timestamp)
                     MessageService.messages.add(newMessage)
+                    messageAdapter.notifyDataSetChanged()
+                    messageListView.smoothScrollToPosition(messageAdapter.itemCount -1)
 
                 }
             }
