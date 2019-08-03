@@ -68,6 +68,9 @@ class MainActivity : AppCompatActivity() {
         drawer_layout.addDrawerListener(toggle)
         toggle.syncState()
         setupAdapters()
+        LocalBroadcastManager.getInstance(this).registerReceiver(userDataChangeReceiver,
+            IntentFilter(BROADCAST_USER_DATA_CHANGE)
+        )
 
         //displaying messages in the UI on click
         channel_list.setOnItemClickListener { _, _, i, _ ->
@@ -85,14 +88,7 @@ class MainActivity : AppCompatActivity() {
 
 
     }
-    //socket lifecycle
-    override fun onResume() {
-        LocalBroadcastManager.getInstance(this).registerReceiver(userDataChangeReceiver,
-            IntentFilter(BROADCAST_USER_DATA_CHANGE)
-        )
-        super.onResume()
-    }
-
+    //socket lifescycle
     override fun onPause() {
         super.onPause()
     }
@@ -169,7 +165,8 @@ class MainActivity : AppCompatActivity() {
             userImageNavHeader.setImageResource(R.drawable.profiledefault)
             userImageNavHeader.setBackgroundColor(Color.TRANSPARENT)
             loginButtonNavHeader.text = "Login"
-            Toast.makeText(this, "You have been logged out", Toast.LENGTH_SHORT).show()
+            mainChannelName.text = "Please log in"
+            Toast.makeText(this, "You have been logged out.", Toast.LENGTH_SHORT).show()
 
         } else {
             val loginIntent = Intent(this, LoginActivity::class.java)
