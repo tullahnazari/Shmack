@@ -41,17 +41,6 @@ class MainActivity : AppCompatActivity() {
     lateinit var messageAdapter: MessageAdapter
     var selectedChannel : Channel? = null
 
-    private fun setupAdapters() {
-        channelAdapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, MessageService.channels)
-        channel_list.adapter = channelAdapter
-
-        messageAdapter = MessageAdapter(this, MessageService.messages)
-        messageListView.adapter = messageAdapter
-        val layoutManager = LinearLayoutManager(this)
-        messageListView.layoutManager = layoutManager
-    }
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -79,6 +68,7 @@ class MainActivity : AppCompatActivity() {
             selectedChannel = MessageService.channels[i]
             drawer_layout.closeDrawer(GravityCompat.START)
             updateWithChannel()
+            hideKeyboard()
 
         }
 
@@ -90,6 +80,19 @@ class MainActivity : AppCompatActivity() {
 
 
     }
+
+    private fun setupAdapters() {
+        channelAdapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, MessageService.channels)
+        channel_list.adapter = channelAdapter
+
+        messageAdapter = MessageAdapter(this, MessageService.messages)
+        messageListView.adapter = messageAdapter
+        val layoutManager = LinearLayoutManager(this)
+        messageListView.layoutManager = layoutManager
+    }
+
+
+
     //socket lifescycle
     override fun onPause() {
         super.onPause()
@@ -167,7 +170,7 @@ class MainActivity : AppCompatActivity() {
             userImageNavHeader.setImageResource(R.drawable.profiledefault)
             userImageNavHeader.setBackgroundColor(Color.TRANSPARENT)
             loginButtonNavHeader.text = "Login"
-            mainChannelName.text = "Please log in"
+            mainChannelName.text = "Please Select a channel!"
             Toast.makeText(this, "You have been logged out.", Toast.LENGTH_SHORT).show()
             hideKeyboard()
 
@@ -217,6 +220,7 @@ class MainActivity : AppCompatActivity() {
                 val newChannel = Channel(channelName, channelDescription, channelId)
                 MessageService.channels.add(newChannel)
                 channelAdapter.notifyDataSetChanged()
+                hideKeyboard()
 
             }
         }
