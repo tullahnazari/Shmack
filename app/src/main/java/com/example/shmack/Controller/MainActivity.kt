@@ -79,6 +79,7 @@ class MainActivity : AppCompatActivity() {
             selectedChannel = MessageService.channels[i]
             drawer_layout.closeDrawer(GravityCompat.START)
             updateWithChannel()
+            hideKeyboard()
 
         }
 
@@ -217,6 +218,7 @@ class MainActivity : AppCompatActivity() {
                 val newChannel = Channel(channelName, channelDescription, channelId)
                 MessageService.channels.add(newChannel)
                 channelAdapter.notifyDataSetChanged()
+                hideKeyboard()
 
             }
         }
